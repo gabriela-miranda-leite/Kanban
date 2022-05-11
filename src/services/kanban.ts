@@ -18,51 +18,62 @@ interface CardProps {
   lista: string;
 }
 
+if (typeof window !== "undefined") {
+  api.defaults.headers.common.Authorization = `JWT ${localStorage.getItem(
+    "token"
+  )}`;
+}
+
 const KanbanApi = {
   async login({ login, senha }: LoginProps) {
-    api
+    return api
       .post(`/login/`, { login, senha })
       .then(async (response) => {
         if (response.status) {
+          localStorage.setItem("token", response.data);
           return {
-            data: response.data,
+            data: response,
             ok: true,
           };
         }
         return {
           ok: false,
-          message: response.data.message || "Erro",
+          message: response?.data.message || "erro",
+          data: [],
         };
       })
       .catch((error) => ({
         ok: false,
-        message: error.response.data.message || "Erro",
+        data: error.response?.data,
+        message: error.response?.message || "erro",
       }));
   },
 
   async createCard({ titulo, conteudo, lista }: CreateCardProps) {
-    api
+    return api
       .post(`/cards/`, { titulo, conteudo, lista })
       .then(async (response) => {
         if (response.status) {
           return {
-            data: response.data,
+            data: response,
             ok: true,
           };
         }
         return {
           ok: false,
-          message: response.data.message || "Erro",
+          message: response?.data.message || "erro",
+          data: [],
         };
       })
       .catch((error) => ({
         ok: false,
-        message: error.response.data.message || "Erro",
+        data: error.response?.data,
+        message: error.response?.message || "erro",
       }));
   },
 
   async changeCard({ id, titulo, conteudo, lista }: CardProps) {
-    api
+    return api
       .put(`/cards/${id}`, { id, titulo, conteudo, lista })
       .then(async (response) => {
         if (response.status) {
@@ -73,17 +84,19 @@ const KanbanApi = {
         }
         return {
           ok: false,
-          message: response.data.message || "Erro",
+          message: response?.data.message || "erro",
+          data: [],
         };
       })
       .catch((error) => ({
         ok: false,
-        message: error.response.data.message || "Erro",
+        data: error.response?.data,
+        message: error.response?.message || "erro",
       }));
   },
 
   async deleteCard(id: string) {
-    api
+    return api
       .delete(`/cards/${id}`)
       .then(async (response) => {
         if (response.status) {
@@ -94,17 +107,19 @@ const KanbanApi = {
         }
         return {
           ok: false,
-          message: response.data.message || "Erro",
+          message: response?.data.message || "erro",
+          data: [],
         };
       })
       .catch((error) => ({
         ok: false,
-        message: error.response.data.message || "Erro",
+        data: error.response?.data,
+        message: error.response?.message || "erro",
       }));
   },
 
   async listCards() {
-    api
+    return api
       .get(`/cards/`)
       .then(async (response) => {
         if (response.status) {
@@ -115,12 +130,14 @@ const KanbanApi = {
         }
         return {
           ok: false,
-          message: response.data.message || "Erro",
+          message: response?.data.message || "erro",
+          data: [],
         };
       })
       .catch((error) => ({
         ok: false,
-        message: error.response.data.message || "Erro",
+        data: error.response?.data,
+        message: error.response?.message || "erro",
       }));
   },
 };
