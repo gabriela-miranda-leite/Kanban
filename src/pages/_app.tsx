@@ -1,12 +1,28 @@
+import { useState, useEffect } from "react";
+
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
 
 import { ThemeProvider } from "styled-components";
+
+import { ListCardsProvider } from "../context/useListCards";
 import { theme } from "../../styles/theme";
 import GlobalStyles from "../../styles/global";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [showChild, setShowChild] = useState(false);
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
+
+  if (!showChild) {
+    return null;
+  }
+
+  if (typeof window === "undefined") {
+    return <></>;
+  }
   return (
     <>
       <Head>
@@ -29,10 +45,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1.0"
         ></meta>
       </Head>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Component {...pageProps} />
-      </ThemeProvider>
+
+      <ListCardsProvider>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </ListCardsProvider>
     </>
   );
 }
