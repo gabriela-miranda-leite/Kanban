@@ -1,53 +1,37 @@
-import { Card } from "..";
+import { Card, AddButton } from "../../components";
+import { CardProps } from "../../context/useListCards";
 
 import * as S from "./styles";
 
 interface ListCardProps {
-  title: string;
+  titulo: string;
   color: "blue" | "green" | "violet" | "brown";
-  card: {
-    title: string;
-    description: string;
-  }[];
+  card: CardProps[];
 }
 
-export const ListCards = ({ title, color, card }: ListCardProps) => {
+export const ListCards = ({ titulo, color, card }: ListCardProps) => {
   return (
     <S.Container>
       <S.ContainerTitle color={color}>
-        <S.ListTitle>{title}</S.ListTitle>
+        <S.ListTitle>{titulo}</S.ListTitle>
       </S.ContainerTitle>
+
       <S.ListCards>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
-        <S.Card>
-          <Card title={card[0].title} description={card[0].description} />
-        </S.Card>
+        {titulo === "To do" && (
+          <S.Card>
+            <AddButton
+              titulo="teste"
+              conteudo="testgjhfdgjfhd fbdjhfgdjh gjhfd "
+              lista="toDoList"
+            />
+          </S.Card>
+        )}
+
+        {card.map((value, index) => (
+          <S.Card key={index}>
+            <Card card={value} />
+          </S.Card>
+        ))}
       </S.ListCards>
     </S.Container>
   );
