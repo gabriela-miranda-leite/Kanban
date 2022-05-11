@@ -11,6 +11,8 @@
 - NextJS
 - Typescript
 - Styled-component
+- React-Markdown
+- remark-gfm
  
 ## 🚀 Como usar
 
