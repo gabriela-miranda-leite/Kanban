@@ -1,4 +1,4 @@
-import { ListCards } from "../../components";
+import { ListCards, Modal } from "../../components";
 import { useListCards } from "../../context/useListCards";
 
 import * as S from "./styles";
@@ -15,6 +15,8 @@ const Home = () => {
         <ListCards titulo="Doing" color="violet" card={doingList} />
         <ListCards titulo="Done" color="blue" card={doneList} />
       </S.ContainerList>
+
+      <Modal />
     </S.Container>
   );
 };
