@@ -1,3 +1,6 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 import {
   FiTrash,
   FiEdit,
@@ -53,7 +56,9 @@ export const Card = ({ card }: CardDetailsProps) => {
     <>
       <S.Container>
         <S.Title>{card.titulo}</S.Title>
-        <S.Description>{card.conteudo}</S.Description>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {card.conteudo}
+        </ReactMarkdown>
         <S.ContainerButtons>
           {card.lista !== "toDoList" && (
             <S.ButtonProperties onClick={handlePrevious}>
