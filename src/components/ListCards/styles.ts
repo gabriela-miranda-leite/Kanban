@@ -12,6 +12,10 @@ export const Container = styled.div`
 
   border-radius: 0.5rem;
   background-color: ${({ theme }) => theme.colors.listCards};
+
+  @media (min-width: 600px) {
+    width: calc(100% / 3);
+  }
 `;
 
 export const ContainerTitle = styled.div<ColorProps>`
@@ -23,6 +27,7 @@ export const ContainerTitle = styled.div<ColorProps>`
 export const ListTitle = styled.h2`
   font-size: 1.8rem;
   font-weight: 400;
+  user-select: none;
 `;
 
 export const ListCards = styled.ul`
