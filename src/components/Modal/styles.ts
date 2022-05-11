@@ -144,7 +144,8 @@ export const Button = styled.button`
   color: ${({ theme }) => theme.colors.text.light};
 
   padding: 1rem;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
+  width: 100%;
 
   &:hover {
     filter: brightness(0.6);
