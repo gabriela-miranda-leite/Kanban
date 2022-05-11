@@ -1,6 +1,17 @@
-import { useContext, createContext, ReactNode } from "react";
+import { useContext, createContext, ReactNode, useState } from "react";
 
-interface ListCardsContextProps {}
+import KanbanApi from "../services/kanban";
+interface CardProps {
+  title: string;
+  description: string;
+  list: "ToDoList" | "DoingList" | "DoneList";
+}
+interface ListCardsContextProps {
+  createCard: ({ title, description, list }: CardProps) => void;
+  toDoList: CardProps[];
+  doingList: CardProps[];
+  doneList: CardProps[];
+}
 
 interface ListCardsProviderProps {
   children: ReactNode;
@@ -9,8 +20,20 @@ interface ListCardsProviderProps {
 const ListCardsContext = createContext({} as ListCardsContextProps);
 
 const ListCardsProvider = ({ children }: ListCardsProviderProps) => {
+  const [toDoList, setToDoList] = useState([] as CardProps[]);
+  const [doingList, setDoingList] = useState([]);
+  const [doneList, setDoneList] = useState([]);
+
+  const createCard = async ({ title, description, list }: CardProps) => {
+    setToDoList((prev) => [...prev, { title, description, list }]);
+  };
+
   return (
-    <ListCardsContext.Provider value={}>{children}</ListCardsContext.Provider>
+    <ListCardsContext.Provider
+      value={{ toDoList, doingList, doneList, createCard }}
+    >
+      {children}
+    </ListCardsContext.Provider>
   );
 };
 
