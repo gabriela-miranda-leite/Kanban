@@ -1,21 +1,18 @@
 import { FiPlus } from "react-icons/fi";
 
-import { useListCards, CreateCardProps } from "../../context/useListCards";
+import { useModal } from "../../context/useModal";
 
 import * as S from "./styles";
 
-export const AddButton = ({ titulo, conteudo, lista }: CreateCardProps) => {
-  const { createCard } = useListCards();
+export const AddButton = () => {
+  const { setToggleModal, toggleModal, setTypeModal } = useModal();
 
   return (
     <S.Container
-      onClick={() =>
-        createCard({
-          titulo: "teste",
-          conteudo: "testgjhfdgjfhd fbdjhfgdjh gjhfd ",
-          lista: "doingList",
-        })
-      }
+      onClick={() => {
+        setTypeModal("create");
+        setToggleModal(!toggleModal);
+      }}
     >
       <FiPlus size={24} />
     </S.Container>
