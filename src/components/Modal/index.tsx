@@ -1,17 +1,11 @@
+import { useState, useEffect } from "react";
+
 import { FiX } from "react-icons/fi";
 
-import { useState } from "react";
-
-import { CardProps, useListCards } from "../../context/useListCards";
+import { useListCards } from "../../context/useListCards";
 import { useModal } from "../../context/useModal";
 
 import * as S from "./styles";
-
-type ModalProps = {
-  card: CardProps;
-  hasOpen: boolean;
-  setToggle: (state: boolean) => void;
-};
 
 export const Modal = () => {
   const { typeModal, setToggleModal, toggleModal, card } = useModal();
@@ -19,6 +13,14 @@ export const Modal = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const [titleEdit, setTitleEdit] = useState("");
+  const [descriptionEdit, setDescriptionEdit] = useState("");
+
+  useEffect(() => {
+    setTitleEdit(card.titulo);
+    setDescriptionEdit(card.conteudo);
+  }, [card.conteudo, card.titulo]);
 
   return (
     <>
@@ -59,14 +61,12 @@ export const Modal = () => {
                         e.preventDefault();
 
                         changeCard({
-                          titulo: title,
-                          conteudo: description,
+                          titulo: titleEdit,
+                          conteudo: descriptionEdit,
                           lista: card.lista,
                           id: card.id,
                         });
-
-                        setTitle("");
-                        setDescription("");
+                        setToggleModal(!toggleModal);
                       }}
                     >
                       <S.Label htmlFor="titulo">Título:</S.Label>
@@ -74,11 +74,10 @@ export const Modal = () => {
                         type="text"
                         id="titulo"
                         name="titulo"
-                        placeholder="Título..."
                         autoComplete="off"
-                        value={title}
+                        value={titleEdit}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setTitle(e.target.value);
+                          setTitleEdit(e.target.value);
                         }}
                       />
 
@@ -86,17 +85,30 @@ export const Modal = () => {
                       <S.TextArea
                         id="detalhes"
                         name="detalhes"
-                        placeholder="Detalhes..."
                         autoComplete="off"
                         rows={5}
-                        value={description}
+                        value={descriptionEdit}
                         onChange={(e) => {
-                          setDescription(e.target.value);
+                          setDescriptionEdit(e.target.value);
                         }}
                       />
 
                       <S.Button type="submit">Salvar</S.Button>
                     </S.Form>
+                    <S.Button
+                      onClick={() => {
+                        setTitleEdit(card.titulo);
+                        setDescriptionEdit(card.conteudo);
+                        changeCard({
+                          titulo: card.titulo,
+                          conteudo: card.conteudo,
+                          lista: card.lista,
+                          id: card.id,
+                        });
+                      }}
+                    >
+                      Cancelar edição
+                    </S.Button>
                   </>
                 )}
 
@@ -116,12 +128,14 @@ export const Modal = () => {
                           lista: "toDoList",
                         });
 
+                        setToggleModal(!toggleModal);
                         setTitle("");
                         setDescription("");
                       }}
                     >
                       <S.Label htmlFor="titulo">Título:</S.Label>
                       <S.Input
+                        required
                         type="text"
                         id="titulo"
                         name="titulo"
@@ -135,6 +149,7 @@ export const Modal = () => {
 
                       <S.Label htmlFor="detalhes">Detalhes:</S.Label>
                       <S.TextArea
+                        required
                         id="detalhes"
                         name="detalhes"
                         placeholder="Detalhes..."
