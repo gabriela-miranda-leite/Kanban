@@ -7,7 +7,7 @@ const rotate = keyframes`
 
 `;
 
-export const Container = styled.button`
+export const Container = styled.div`
   width: 100%;
   padding: 2rem 3rem;
 
@@ -49,6 +49,7 @@ export const Container = styled.button`
 export const Title = styled.h2`
   font-size: 1.6rem;
   font-weight: 300;
+  text-transform: capitalize;
 
   margin-bottom: 2rem;
   width: 100%;
@@ -72,6 +73,8 @@ export const ContainerButtons = styled.div`
 
 export const ButtonProperties = styled.button`
   border: none;
+  width: 50px;
+  height: 50px;
 
   color: ${({ theme }) => theme.colors.text.light};
   background-color: ${({ theme }) => theme.colors.card};
