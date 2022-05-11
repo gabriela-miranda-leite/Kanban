@@ -7,23 +7,23 @@ import {
 } from "react";
 
 import KanbanApi from "../services/kanban";
-interface CreateCardProps {
-  title: string;
-  description: string;
-  list: "toDoList" | "doingList" | "doneList";
+export interface CreateCardProps {
+  titulo: string;
+  conteudo: string;
+  lista: "toDoList" | "doingList" | "doneList";
 }
 
-interface CardProps {
+export interface CardProps {
   id: string;
-  title: string;
-  description: string;
-  list: "toDoList" | "doingList" | "doneList";
+  titulo: string;
+  conteudo: string;
+  lista: "toDoList" | "doingList" | "doneList";
 }
 
 interface ListCardsContextProps {
-  createCard: ({ title, description, list }: CreateCardProps) => Promise<void>;
+  createCard: ({ titulo, conteudo, lista }: CreateCardProps) => Promise<void>;
   deleteCard: (id: string, list: string) => Promise<void>;
-  changeCard: ({ title, description, list, id }: CardProps) => Promise<void>;
+  changeCard: ({ titulo, conteudo, lista, id }: CardProps) => Promise<void>;
   toDoList: CardProps[];
   doingList: CardProps[];
   doneList: CardProps[];
@@ -36,50 +36,84 @@ interface ListCardsProviderProps {
 const ListCardsContext = createContext({} as ListCardsContextProps);
 
 const ListCardsProvider = ({ children }: ListCardsProviderProps) => {
-  const [request, setRequest] = useState("idle");
-
   const [toDoList, setToDoList] = useState([] as CardProps[]);
   const [doingList, setDoingList] = useState([] as CardProps[]);
   const [doneList, setDoneList] = useState([] as CardProps[]);
 
   const login = async () => {
-    const response = await KanbanApi.login({
+    const result = await KanbanApi.login({
       login: "letscode",
       senha: "lets@123",
     });
 
-    console.log(response);
+    if (!result.ok) {
+      return;
+    }
+
+    listCards();
   };
 
   const listCards = async () => {
-    const response = await KanbanApi.listCards();
+    const result = await KanbanApi.listCards();
 
-    console.log(response);
+    if (!result.ok) {
+      return;
+    }
+
+    let list = result.data.filter(
+      (value: CardProps) => value.lista === "toDoList"
+    );
+
+    setToDoList(list);
+
+    list = result.data.filter(
+      (value: CardProps) => value.lista === "doingList"
+    );
+
+    setDoingList(list);
+
+    list = result.data.filter((value: CardProps) => value.lista === "doneList");
+
+    setDoneList(list);
   };
 
-  const createCard = async ({ title, description, list }: CreateCardProps) => {
-    const response = await KanbanApi.createCard({
-      titulo: title,
-      conteudo: description,
-      lista: list,
+  const createCard = async ({ titulo, conteudo, lista }: CreateCardProps) => {
+    const result = await KanbanApi.createCard({
+      titulo,
+      conteudo,
+      lista,
     });
-    console.log(response);
+
+    if (!result.ok) {
+      return;
+    }
+
+    listCards();
   };
 
-  const changeCard = async ({ title, description, list, id }: CardProps) => {
-    const response = await KanbanApi.changeCard({
-      titulo: title,
-      conteudo: description,
-      lista: list,
+  const changeCard = async ({ titulo, conteudo, lista, id }: CardProps) => {
+    const result = await KanbanApi.changeCard({
+      titulo,
+      conteudo,
+      lista,
       id,
     });
-    console.log(response);
-    setToDoList((prev) => [...prev, { title, description, list, id }]);
+
+    if (!result.ok) {
+      return;
+    }
+
+    listCards();
   };
 
   const deleteCard = async (id: string, list: string) => {
-    const response = await KanbanApi.deleteCard(id);
-    console.log(response);
+    const result = await KanbanApi.deleteCard(id);
+
+    if (!result.ok) {
+      return;
+    }
+
+    listCards();
   };
 
   useEffect(() => {
