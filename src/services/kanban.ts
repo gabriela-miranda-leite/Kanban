@@ -1,17 +1,17 @@
 import api from "./api";
 
-interface loginProps {
+interface LoginProps {
   login: string;
   senha: string;
 }
 
-interface createCardProps {
+interface CreateCardProps {
   titulo: string;
   conteudo: string;
   lista: string;
 }
 
-interface cardProps {
+interface CardProps {
   id: string;
   titulo: string;
   conteudo: string;
@@ -19,7 +19,7 @@ interface cardProps {
 }
 
 const KanbanApi = {
-  async login({ login, senha }: loginProps) {
+  async login({ login, senha }: LoginProps) {
     api
       .post(`/login/`, { login, senha })
       .then(async (response) => {
@@ -40,7 +40,7 @@ const KanbanApi = {
       }));
   },
 
-  async createCard({ titulo, conteudo, lista }: createCardProps) {
+  async createCard({ titulo, conteudo, lista }: CreateCardProps) {
     api
       .post(`/cards/`, { titulo, conteudo, lista })
       .then(async (response) => {
@@ -61,7 +61,7 @@ const KanbanApi = {
       }));
   },
 
-  async changeCard({ id, titulo, conteudo, lista }: cardProps) {
+  async changeCard({ id, titulo, conteudo, lista }: CardProps) {
     api
       .put(`/cards/${id}`, { id, titulo, conteudo, lista })
       .then(async (response) => {
