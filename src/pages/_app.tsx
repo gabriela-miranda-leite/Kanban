@@ -10,7 +10,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -24,10 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           de trabalho através da utilização de colunas e cartões, facilitando a
           gestão de atividades."
         />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-          rel="stylesheet"
-        />
+
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
