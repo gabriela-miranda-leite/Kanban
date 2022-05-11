@@ -47,8 +47,8 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 1.6rem;
-  font-weight: 300;
+  font-size: 1.8rem;
+  font-weight: 600;
   text-transform: capitalize;
 
   margin-bottom: 2rem;
@@ -59,11 +59,6 @@ export const Title = styled.h2`
   overflow: hidden;
   text-overflow: ellipsis;
   user-select: none;
-`;
-
-export const Description = styled(Title)`
-  font-size: 1.4rem;
-  font-weight: 600;
 `;
 
 export const ContainerButtons = styled.div`
