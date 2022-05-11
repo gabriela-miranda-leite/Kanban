@@ -106,7 +106,7 @@ const ListCardsProvider = ({ children }: ListCardsProviderProps) => {
     listCards();
   };
 
-  const deleteCard = async (id: string, list: string) => {
+  const deleteCard = async (id: string) => {
     const result = await KanbanApi.deleteCard(id);
 
     if (!result.ok) {
