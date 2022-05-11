@@ -19,11 +19,7 @@ export const ListCards = ({ titulo, color, card }: ListCardProps) => {
       <S.ListCards>
         {titulo === "To do" && (
           <S.Card>
-            <AddButton
-              titulo="teste"
-              conteudo="testgjhfdgjfhd fbdjhfgdjh gjhfd "
-              lista="toDoList"
-            />
+            <AddButton />
           </S.Card>
         )}
 
