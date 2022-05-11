@@ -40,19 +40,6 @@ const ListCardsProvider = ({ children }: ListCardsProviderProps) => {
   const [doingList, setDoingList] = useState([] as CardProps[]);
   const [doneList, setDoneList] = useState([] as CardProps[]);
 
-  const login = async () => {
-    const result = await KanbanApi.login({
-      login: "letscode",
-      senha: "lets@123",
-    });
-
-    if (!result.ok) {
-      return;
-    }
-
-    listCards();
-  };
-
   const listCards = async () => {
     const result = await KanbanApi.listCards();
 
@@ -117,6 +104,19 @@ const ListCardsProvider = ({ children }: ListCardsProviderProps) => {
   };
 
   useEffect(() => {
+    const login = async () => {
+      const result = await KanbanApi.login({
+        login: "letscode",
+        senha: "lets@123",
+      });
+
+      if (!result.ok) {
+        return;
+      }
+
+      listCards();
+    };
+
     login();
   }, []);
 
